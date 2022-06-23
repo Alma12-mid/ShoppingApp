@@ -40,4 +40,6 @@ class ProductsCollectionViewCell: UICollectionViewCell {
             productImage.sd_setImage(with: url, completed: nil)
         }
     }
+    
+    
 }

@@ -20,7 +20,6 @@ class HomeViewController: UIViewController {
    // private var dataSource: [Value] = []
     var values: [Value] = []
     var count: Int = 0
-   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -214,10 +213,13 @@ extension HomeViewController: UICollectionViewDataSource {
              if dataType.type! == "products" {
                     for value in dataType.values {
                         print(value.name)
+                        let strikeOfferPrice = value.offerPrice!
+                        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: strikeOfferPrice)
+                            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
                         cell.setImageFrom(urlString: value.imageURL)
                         cell.productTitleName.text = value.name
                         cell.productActualPrice.text = value.actualPrice
-                        cell.productOfferPrice.text = value.offerPrice
+                        cell.productOfferPrice.attributedText = attributeString
                         if value.isExpress == false {
                             cell.expressDelivery.isHidden = true
                         }
