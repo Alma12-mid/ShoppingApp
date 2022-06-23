@@ -216,7 +216,7 @@ extension HomeViewController: UICollectionViewDataSource {
                         let strikeOfferPrice = value.offerPrice!
                         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: strikeOfferPrice)
                             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
-                        cell.setImageFrom(urlString: value.imageURL)
+                        cell.setImageFrom(urlString: value.image)
                         cell.productTitleName.text = value.name
                         cell.productActualPrice.text = value.actualPrice
                         cell.productOfferPrice.attributedText = attributeString
