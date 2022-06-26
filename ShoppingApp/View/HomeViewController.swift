@@ -185,57 +185,48 @@ extension HomeViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         switch indexPath.section{
         case 0: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
             for dataType in data {
-             if dataType.type! == "category" {
-                    for value in dataType.values {
-                        print(value.name)
-                        cell.setImageFrom(urlString: value.imageURL)
-                        cell.categoryTitleName.text = value.name
-                 }
+                if dataType.type! == "category" {
+                    cell.setImageFrom(urlString: dataType.values[indexPath.item].imageURL)
+                    cell.categoryTitleName.text = dataType.values[indexPath.item].name
                 }
             }
             return cell
         case 1: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCollectionViewCell", for: indexPath) as! BannerCollectionViewCell
             for dataType in data {
-             if dataType.type! == "banners" {
-                    for value in dataType.values {
-                        print(value.name)
-                        cell.setImageFrom(urlString: value.bannerURL)
-                 }
+                if dataType.type! == "banners" {
+                    cell.setImageFrom(urlString: dataType.values[indexPath.item].bannerURL)
                 }
             }
             return cell
         default: let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductsCollectionViewCell", for: indexPath) as! ProductsCollectionViewCell
             for dataType in data {
-             if dataType.type! == "products" {
-                    for value in dataType.values {
-                        print(value.name)
-                        let strikeOfferPrice = value.offerPrice!
-                        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: strikeOfferPrice)
-                            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
-                        cell.setImageFrom(urlString: value.image)
-                        cell.productTitleName.text = value.name
-                        cell.productActualPrice.text = value.actualPrice
-                        cell.productOfferPrice.attributedText = attributeString
-                        if value.isExpress == false {
-                            cell.expressDelivery.isHidden = true
-                        }
-                        if value.offer! > 0 {
-                            cell.offer.text = "\(value.offer)"
-                        }
-                        if value.offerPrice == value.actualPrice {
-                            cell.productOfferPrice.isHidden = true
-                        }
-                 }
+                if dataType.type! == "products" {
+                    print(dataType.values[indexPath.item].name ?? "")
+                    let strikeOfferPrice = dataType.values[indexPath.item].offerPrice!
+                    let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: strikeOfferPrice)
+                    attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
+                    cell.setImageFrom(urlString: dataType.values[indexPath.item].image)
+                    cell.productTitleName.text = dataType.values[indexPath.item].name
+                    cell.productActualPrice.text = dataType.values[indexPath.item].actualPrice
+                    cell.productOfferPrice.attributedText = attributeString
+                    if dataType.values[indexPath.item].isExpress == false {
+                        cell.expressDelivery.isHidden = true
+                    }
+                    if dataType.values[indexPath.item].offer! > 0 {
+                        cell.offer.text = dataType.values[indexPath.item].offer?.description ?? ""
+                    }
+                    if dataType.values[indexPath.item].offerPrice == dataType.values[indexPath.item].actualPrice {
+                        cell.productOfferPrice.isHidden = true
+                    }
                 }
             }
             return cell
         }
+    }         
         
-    }
 }
 
 extension HomeViewController: UICollectionViewDelegate {
